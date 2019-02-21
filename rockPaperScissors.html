@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock-Paper-Scissors</title>
+</head>
+
+<body>
+
+    <div>
+        <p id="directions">Press r, p or s to start playing!</p>
+        <p id="userchoice-text"></p>
+        <p id="computerchoice-text"></p>
+        <p id="wins-text"></p>
+        <p id="losses-text"></p>
+        <p id="ties-text"></p>
+    </div>
+
+    <script type="text/javascript">
+        //declare and initialize array for possible computer choices
+        var computerChoices = ["r", "p", "s"];
+
+        //create variables for wins, losses, ties
+        var wins = 0;
+        var losses = 0;
+        var ties = 0;
+
+        //create variables that point to the HTML where we want to display things.
+        var directionsText = document.getElementById("directions");
+        var userChoiceText = document.getElementById("userchoice-text");
+        var computerChoiceText = document.getElementById("computerchoice-text");
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var tiesText = document.getElementById("ties-text");
+
+        //run this function when a user presses a key
+        document.onkeyup = function(event) {
+            var userGuess = event.key;
+            
+            //scale random generator to size of computerChoices array to assign computerGuess a value
+            var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+            //find out who wins and increment appropriate counter
+            if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+                if ((userGuess === "r" && computerGuess === "s") ||
+                    (userGuess === "s" && computerGuess === "p") || 
+                    (userGuess === "p" && computerGuess === "r")) {
+                    wins++;
+                } else if (userGuess === computerGuess) {
+                    ties++;
+                } else {
+                    losses++;
+                }
+
+                //hide directions
+                directionsText.textContent = "";
+
+                //display the results from one round of the game
+                userChoiceText.textContent = "You chose: " + userGuess;
+                computerChoiceText.textContent = "The computer chose: " + computerGuess;
+                winsText.textContent = "wins: " + wins;
+                lossesText.textContent = "losses: " + losses;
+                tiesText.textContent = "ties: " + ties;
+            } else {
+                alert("Please select a valid key");
+            }
+        };
+    </script>
+    
+</body>
+</html>
